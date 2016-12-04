@@ -7,6 +7,7 @@
 </head>
 <body>
 <form action="join.do" method="post">
+<input type="hidden" name="employeeNo" value="${employeeNo}">
 <p>
 	아이디:<br/><input type="text" name="id" value="${param.id}">
 	<c:if test="${errors.id}">ID를 입력하세요.</c:if>

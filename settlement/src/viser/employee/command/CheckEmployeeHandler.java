@@ -1,4 +1,4 @@
-package viser.account.command;
+package viser.employee.command;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,21 +7,19 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import mvc.command.CommandHandler;
-import viser.account.service.JoinRequest;
-import viser.account.service.JoinService;
+import viser.department.model.Department;
 import viser.department.service.SearchDepartmentService;
 import viser.employee.model.Employee;
 import viser.employee.service.SearchEmployeeRequest;
 import viser.employee.service.SearchEmployeeService;
+import viser.position.model.Position;
 import viser.position.service.SearchPositionService;
 
-public class Joinhandler implements CommandHandler{
+public class CheckEmployeeHandler implements CommandHandler{
 	
 	private static final String NONE_FORM_VIEW = "/WEB-INF/view/checkEmployeeForm.jsp";
 	private static final String MAKE_FORM_VIEW = "/WEB-INF/view/joinForm.jsp";
-	private JoinService joinService = new JoinService();
 	private SearchEmployeeService searchEmployeeService = new SearchEmployeeService();
 	private SearchDepartmentService searchDepartmentService = new SearchDepartmentService();
 	private SearchPositionService searchPositionService = new SearchPositionService();
@@ -48,9 +46,21 @@ public class Joinhandler implements CommandHandler{
 		String positionName = req.getParameter("positionName");
 		String name = req.getParameter("name");
 		
-		searchEmployeeRequest.setDepartmentNo(searchDepartmentService.search(departmentName).getDepartmentNo());
-		searchEmployeeRequest.setPositionNo(searchPositionService.search(positionName).getPositionNo());
-		searchEmployeeRequest.setName(name);
+		if(departmentName != null){
+			Department department = searchDepartmentService.search(departmentName);
+			if(department != null){
+				searchEmployeeRequest.setDepartmentNo(department.getDepartmentNo());
+			}
+		}
+		if(positionName != null){
+			Position position = searchPositionService.search(positionName);
+			if(position != null){
+				searchEmployeeRequest.setPositionNo(position.getPositionNo());
+			}	
+		}
+		if(name != null){
+			searchEmployeeRequest.setName(name);	
+		}
 		
 		Map<String, Boolean> errors = new HashMap<>();
 		req.setAttribute("errors", errors);
@@ -63,7 +73,7 @@ public class Joinhandler implements CommandHandler{
 		
 		List<Employee> employeeList = searchEmployeeService.search(searchEmployeeRequest);
 		if(employeeList.size() == 0){
-			errors.put("beEmployee", Boolean.FALSE);
+			errors.put("beEmployee", Boolean.TRUE);
 			return NONE_FORM_VIEW;
 		}else if(employeeList.size() == 1){
 			req.setAttribute("employeeNo", employeeList.get(0).getEmployeeNo());

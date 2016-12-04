@@ -8,6 +8,6 @@
 </head>
 <body>
 
-<br/>
+<hr/>
 </body>
 </html>

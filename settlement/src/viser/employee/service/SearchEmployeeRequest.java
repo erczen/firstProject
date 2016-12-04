@@ -33,7 +33,7 @@ public class SearchEmployeeRequest {
 	}
 	private void checkEmpty(Map<String, Boolean> errors, 
 			String value, String fieldName) {
-		if (value == null || value.isEmpty())
+		if (value == null || value.isEmpty() || value.equals("0"))
 			errors.put(fieldName, Boolean.TRUE);
 	}
 }
