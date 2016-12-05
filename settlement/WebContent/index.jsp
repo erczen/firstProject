@@ -11,6 +11,7 @@
 	CT: ${authUser.name}님, 안녕하세요.
 	<a href="logout.do">[로그아웃하기]</a>
 	<a href="changePwd.do">[암호변경하기]</a>
+	<a href="settlementMain.do">[결제페이지이동]</a>
 </u:isLogin>
 <u:notLogin>
 	CT: <a href="checkEmployee.do">[회원가입하기]</a>

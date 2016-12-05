@@ -30,7 +30,7 @@ public class DepartmentDao {
 		}
 	}
 	
-	public Department selectbyName(Connection conn, String departmentName) throws SQLException{
+	public Department selectByName(Connection conn, String departmentName) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
@@ -49,7 +49,7 @@ public class DepartmentDao {
 		}
 	}
 	
-	public Department selectbyNo(Connection conn, int departmentNo) throws SQLException{
+	public Department selectByNo(Connection conn, int departmentNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{

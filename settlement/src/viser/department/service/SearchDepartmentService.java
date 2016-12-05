@@ -18,7 +18,7 @@ public class SearchDepartmentService {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Department department = departmentDao.selectbyNo(conn, departmentNo);
+			Department department = departmentDao.selectByNo(conn, departmentNo);
 			
 			conn.commit();
 			
@@ -37,7 +37,7 @@ public class SearchDepartmentService {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Department department = departmentDao.selectbyName(conn, departmentName);
+			Department department = departmentDao.selectByName(conn, departmentName);
 			
 			conn.commit();
 			

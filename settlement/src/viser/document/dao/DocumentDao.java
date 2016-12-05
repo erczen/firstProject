@@ -1,16 +1,15 @@
 package viser.document.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import jdbc.JdbcUtil;
 import viser.document.model.Document;
-import viser.employee.model.Employee;
 
 public class DocumentDao {
 	
@@ -32,7 +31,27 @@ public class DocumentDao {
 		}
 	}
 	
-	public Document selectbyNo(Connection conn, int documentNo) throws SQLException{
+	public List<Document> select(Connection conn, int startRow, int size) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from document " +
+					"order by document_no desc limit ?, ?");
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, size);
+			rs = pstmt.executeQuery();
+			List<Document> documentList = new ArrayList<>();
+			while (rs.next()) {
+				documentList.add(convertDocument(rs));
+			}
+			return documentList;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public Document selectByNo(Connection conn, int documentNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
@@ -48,6 +67,41 @@ public class DocumentDao {
 		}finally{
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public List<Document> selectByDoctype(Connection conn, int doctypeNo) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement("select * from document where doctype_no = ?");
+			pstmt.setInt(1, doctypeNo);
+			rs = pstmt.executeQuery();
+			
+			List<Document> documentList = new ArrayList<>();
+			while(rs.next()){
+				documentList.add(convertDocument(rs));
+			}
+			return documentList;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public int selectCount(Connection conn) throws SQLException {
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select count(*) from document");
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
 		}
 	}
 	

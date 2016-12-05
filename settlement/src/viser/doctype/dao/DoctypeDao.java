@@ -30,7 +30,26 @@ public class DoctypeDao {
 		}
 	}
 	
-	public Doctype selectbyNo(Connection conn, int doctypeNo) throws SQLException{
+	public Doctype selectByName(Connection conn, String doctypeName) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement("select * from doctype where doctype_name = ?");
+			pstmt.setString(1, doctypeName);
+			rs = pstmt.executeQuery();
+			
+			Doctype doctype = null;
+			if(rs.next()){
+				doctype = convertDoctype(rs);
+			}
+			return doctype;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public Doctype selectByNo(Connection conn, int doctypeNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{

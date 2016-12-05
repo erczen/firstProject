@@ -30,7 +30,7 @@ public class PositionDao {
 		}
 	}
 	
-	public Position selectbyName(Connection conn, String positionName) throws SQLException{
+	public Position selectByName(Connection conn, String positionName) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
@@ -49,7 +49,7 @@ public class PositionDao {
 		}
 	}
 	
-	public Position selectbyNo(Connection conn, int positionNo) throws SQLException{
+	public Position selectByNo(Connection conn, int positionNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{

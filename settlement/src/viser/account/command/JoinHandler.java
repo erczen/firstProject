@@ -1,7 +1,6 @@
 package viser.account.command;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,16 +11,11 @@ import mvc.command.CommandHandler;
 import viser.account.service.DuplicateIdException;
 import viser.account.service.JoinRequest;
 import viser.account.service.JoinService;
-import viser.department.service.SearchDepartmentService;
-import viser.employee.model.Employee;
-import viser.employee.service.SearchEmployeeRequest;
-import viser.employee.service.SearchEmployeeService;
-import viser.position.service.SearchPositionService;
 
 public class JoinHandler implements CommandHandler{
 	
 	private static final String FORM_VIEW = "/WEB-INF/view/joinForm.jsp";
-	private static final String SUCCESS_VIEW = "/index.jsp";
+	private static final String SUCCESS_VIEW = "/WEB-INF/view/joinSuccess.jsp";
 	private JoinService joinService = new JoinService();
 	
 	@Override

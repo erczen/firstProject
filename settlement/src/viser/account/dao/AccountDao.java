@@ -32,7 +32,7 @@ public class AccountDao {
 		}
 	}
 	
-	public Account selectbyId(Connection conn, String employeeId) throws SQLException{
+	public Account selectById(Connection conn, String employeeId) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
@@ -68,7 +68,7 @@ public class AccountDao {
 	public void update(Connection conn, Account account) throws SQLException{
 		PreparedStatement pstmt = null;
 		try{
-			pstmt = conn.prepareStatement("update account set employee_no = ? password = ? regdate = ? where employee_id = ?");
+			pstmt = conn.prepareStatement("update account set employee_no = ?, password = ?, regdate = ? where employee_id = ?");
 			pstmt.setInt(1, account.getEmployeeNo());
 			pstmt.setString(2, account.getPassword());
 			pstmt.setTimestamp(3, new Timestamp(account.getRegdate().getTime()));

@@ -19,7 +19,7 @@ public class JoinService {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Account account = accountDao.selectbyId(conn, joinRequest.getId());
+			Account account = accountDao.selectById(conn, joinRequest.getId());
 			if(account != null){
 				JdbcUtil.rollback(conn);
 				throw new DuplicateIdException();

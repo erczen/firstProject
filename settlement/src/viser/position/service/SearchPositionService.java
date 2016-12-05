@@ -18,7 +18,7 @@ public class SearchPositionService {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Position position = positionDao.selectbyNo(conn, positionNo);
+			Position position = positionDao.selectByNo(conn, positionNo);
 			
 			conn.commit();
 			
@@ -37,7 +37,7 @@ public class SearchPositionService {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Position position = positionDao.selectbyName(conn, positionName);
+			Position position = positionDao.selectByName(conn, positionName);
 			
 			conn.commit();
 			

@@ -52,7 +52,7 @@ public class EmployeeDao {
 		}
 	}
 	
-	public Employee selectbyNo(Connection conn, int employeeNo) throws SQLException{
+	public Employee selectByNo(Connection conn, int employeeNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
