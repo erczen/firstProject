@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mvc.command.CommandHandler;
+import viser.account.service.User;
 import viser.document.service.DocumentPage;
 import viser.document.service.ListDocumentService;
 import viser.document.service.PageForm;
@@ -19,6 +20,7 @@ public class ListDocumentHandler implements CommandHandler {
 		String cautionPageNoVal = req.getParameter("cautionPageNo");
 		String checkWaitPageNoVal = req.getParameter("checkWaitPageNo");
 		String checkPageNoVal = req.getParameter("checkPageNo");
+		User user = (User) req.getSession(false).getAttribute("authUser");
 		
 		int cautionPageNo = 1;
 		int checkWaitPageNo = 1;
@@ -33,9 +35,10 @@ public class ListDocumentHandler implements CommandHandler {
 			checkPageNo = Integer.parseInt(checkPageNoVal);
 		}
 		
-		PageForm cautionPage = listDocumentService.getDocumentPage(cautionPageNo);
-		PageForm checkWaitPage = listDocumentService.getDocumentPage(checkWaitPageNo);
-		PageForm checkPage = listDocumentService.getDocumentPage(checkPageNo);
+		PageForm cautionPage = listDocumentService.getDocumentPage(cautionPageNo, 2);
+		PageForm checkWaitPage = listDocumentService.getDocumentPage(checkWaitPageNo, false, user);
+		PageForm checkPage = listDocumentService.getDocumentPage(checkPageNo, true, user);
+		
 		DocumentPage documentPage = new DocumentPage(cautionPage, checkWaitPage, checkPage);
 		
 		req.setAttribute("documentPage", documentPage);

@@ -5,12 +5,12 @@ import java.util.List;
 import viser.document.model.Document;
 
 public class PageForm {
-	protected int total;
-	protected int currentPage;
-	protected List<ListDocumentForm> content;
-	protected int totalPages;
-	protected int startPage;
-	protected int endPage;
+	private int total;
+	private int currentPage;
+	private List<ListDocumentForm> content;
+	private int totalPages;
+	private int startPage;
+	private int endPage;
 	
 	public PageForm(){}
 	
@@ -87,7 +87,7 @@ public class PageForm {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-	
+
 	public boolean hasNoDocuments() {
 		return total == 0;
 	}

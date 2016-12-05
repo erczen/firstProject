@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jdbc.connection.ConnectionProvider;
+import viser.account.dao.AccountDao;
+import viser.account.service.User;
 import viser.department.dao.DepartmentDao;
 import viser.doctype.dao.DoctypeDao;
 import viser.document.dao.DocumentDao;
@@ -21,6 +23,7 @@ public class ListDocumentService {
 	private DepartmentDao departmentDao = new DepartmentDao();
 	private PositionDao positionDao = new PositionDao();
 	private DoctypeDao doctypeDao = new DoctypeDao();
+	private AccountDao accountDao = new AccountDao();
 	private int size = 10;
 
 	public PageForm getDocumentPage(int pageNum) {
@@ -28,6 +31,47 @@ public class ListDocumentService {
 			int total = documentDao.selectCount(conn);
 			List<Document> content = documentDao.select(
 					conn, (pageNum - 1) * size, size);
+			List<ListDocumentForm> convertContent = new ArrayList<>();
+			if(content != null){
+				for(Document document : content){
+					convertContent.add(convertListDocumentForm(conn, document));
+				}
+			}else{
+				convertContent = null;
+			}
+		
+			return new PageForm(total, pageNum, size, convertContent);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public PageForm getDocumentPage(int pageNum, int doctypeNo) {
+		try (Connection conn = ConnectionProvider.getConnection()) {
+			int total = documentDao.selectCount(conn);
+			List<Document> content = documentDao.select(
+					conn, (pageNum - 1) * size, size, doctypeNo);
+			List<ListDocumentForm> convertContent = new ArrayList<>();
+			if(content != null){
+				for(Document document : content){
+					convertContent.add(convertListDocumentForm(conn, document));
+				}
+			}else{
+				convertContent = null;
+			}
+		
+			return new PageForm(total, pageNum, size, convertContent);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public PageForm getDocumentPage(int pageNum, boolean officerCheck, User user) {
+		try (Connection conn = ConnectionProvider.getConnection()) {
+			int total = documentDao.selectCount(conn);
+			int officerNo = accountDao.selectById(conn, user.getId()).getEmployeeNo();
+			List<Document> content = documentDao.select(
+					conn, (pageNum - 1) * size, size, officerCheck, officerNo);
 			List<ListDocumentForm> convertContent = new ArrayList<>();
 			if(content != null){
 				for(Document document : content){
