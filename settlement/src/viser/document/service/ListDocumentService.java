@@ -2,15 +2,25 @@ package viser.document.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jdbc.connection.ConnectionProvider;
+import viser.department.dao.DepartmentDao;
+import viser.doctype.dao.DoctypeDao;
 import viser.document.dao.DocumentDao;
 import viser.document.model.Document;
+import viser.employee.dao.EmployeeDao;
+import viser.employee.model.Employee;
+import viser.position.dao.PositionDao;
 
 public class ListDocumentService {
 
 	private DocumentDao documentDao = new DocumentDao();
+	private EmployeeDao employeeDao = new EmployeeDao();
+	private DepartmentDao departmentDao = new DepartmentDao();
+	private PositionDao positionDao = new PositionDao();
+	private DoctypeDao doctypeDao = new DoctypeDao();
 	private int size = 10;
 
 	public PageForm getDocumentPage(int pageNum) {
@@ -18,9 +28,38 @@ public class ListDocumentService {
 			int total = documentDao.selectCount(conn);
 			List<Document> content = documentDao.select(
 					conn, (pageNum - 1) * size, size);
-			return new PageForm(total, pageNum, size, content);
+			List<ListDocumentForm> convertContent = new ArrayList<>();
+			if(content != null){
+				for(Document document : content){
+					convertContent.add(convertListDocumentForm(conn, document));
+				}
+			}else{
+				convertContent = null;
+			}
+		
+			return new PageForm(total, pageNum, size, convertContent);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	private ListDocumentForm convertListDocumentForm(Connection conn, Document document) throws SQLException{
+		Employee employee = employeeDao.selectByNo(conn, document.getEmployeeNo());
+		Employee officer = employeeDao.selectByNo(conn, document.getOfficerNo());
+		ListDocumentForm listDocumentForm = new ListDocumentForm();
+		
+		listDocumentForm.setDocumentNo(document.getDocumentNo());
+		listDocumentForm.setDepartmentName(departmentDao.selectByNo(conn, employee.getDepartmentNo()).getDepartmentName());
+		listDocumentForm.setPositionName(positionDao.selectByNo(conn, employee.getPositionNo()).getPositionName());
+		listDocumentForm.setName(employee.getName());
+		listDocumentForm.setDoctypeName(doctypeDao.selectByNo(conn, document.getDoctypeNo()).getDoctypeName());
+		listDocumentForm.setTitle(document.getTitle());
+		listDocumentForm.setOfficerDepartment(departmentDao.selectByNo(conn, officer.getDepartmentNo()).getDepartmentName());
+		listDocumentForm.setOfficerPosition(positionDao.selectByNo(conn, officer.getPositionNo()).getPositionName());
+		listDocumentForm.setOfficerName(officer.getName());
+		listDocumentForm.setOfficerCheck(document.isOfficerCheck());
+		listDocumentForm.setRegDate(document.getRegDate());
+		
+		return listDocumentForm;
 	}
 }

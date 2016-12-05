@@ -58,7 +58,7 @@ public class AccountDao {
 			pstmt.setString(1, account.getEmployeeId());
 			pstmt.setInt(2, account.getEmployeeNo());
 			pstmt.setString(3, account.getPassword());
-			pstmt.setTimestamp(4, new Timestamp(account.getRegdate().getTime()));
+			pstmt.setTimestamp(4, new Timestamp(account.getRegDate().getTime()));
 			pstmt.executeUpdate();
 		}finally{
 			JdbcUtil.close(pstmt);
@@ -71,7 +71,7 @@ public class AccountDao {
 			pstmt = conn.prepareStatement("update account set employee_no = ?, password = ?, regdate = ? where employee_id = ?");
 			pstmt.setInt(1, account.getEmployeeNo());
 			pstmt.setString(2, account.getPassword());
-			pstmt.setTimestamp(3, new Timestamp(account.getRegdate().getTime()));
+			pstmt.setTimestamp(3, new Timestamp(account.getRegDate().getTime()));
 			pstmt.setString(4, account.getEmployeeId());
 			pstmt.executeUpdate();
 		}finally{

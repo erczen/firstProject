@@ -6,15 +6,15 @@ public class Account {
 	private String employeeId;
 	private int employeeNo;
 	private String password;
-	private Date regdate;
+	private Date regDate;
 	
 	public Account(){}
 	
-	public Account(String employeeId, int employeeNo, String password, Date regdate){
+	public Account(String employeeId, int employeeNo, String password, Date regDate){
 		this.employeeId = employeeId;
 		this.employeeNo = employeeNo;
 		this.password = password;
-		this.regdate = regdate;
+		this.regDate = regDate;
 	}
 	
 	public String getEmployeeId() {
@@ -35,11 +35,11 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getRegdate() {
-		return regdate;
+	public Date getRegDate() {
+		return regDate;
 	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 	
 	public boolean matchPassword(String pwd) {

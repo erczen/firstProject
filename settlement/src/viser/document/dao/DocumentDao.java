@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jdbc.JdbcUtil;
@@ -108,12 +110,14 @@ public class DocumentDao {
 	public void insert(Connection conn, Document document) throws SQLException{
 		PreparedStatement pstmt = null;
 		try{
-			pstmt = conn.prepareStatement("insert into document(doctype_no, title, content, officer_no, officer_check) values(?, ?, ?, ?, ?)");
-			pstmt.setInt(1, document.getDoctypeNo());
-			pstmt.setString(2, document.getTitle());
-			pstmt.setString(3, document.getContent());
-			pstmt.setInt(4, document.getOfficerNo());
-			pstmt.setBoolean(5, document.isOfficerCheck());
+			pstmt = conn.prepareStatement("insert into document(employee_no, doctype_no, title, content, officer_no, officer_check, regdate) values(?, ?, ?, ?, ?, ?, ?)");
+			pstmt.setInt(1, document.getEmployeeNo());
+			pstmt.setInt(2, document.getDoctypeNo());
+			pstmt.setString(3, document.getTitle());
+			pstmt.setString(4, document.getContent());
+			pstmt.setInt(5, document.getOfficerNo());
+			pstmt.setBoolean(6, document.isOfficerCheck());
+			pstmt.setTimestamp(7, new Timestamp(document.getRegDate().getTime()));
 			pstmt.executeUpdate();
 		}finally{
 			JdbcUtil.close(pstmt);
@@ -131,8 +135,12 @@ public class DocumentDao {
 		}
 	} 
 	
+	private Date toDate(Timestamp date){
+		return date == null ? null : new Date(date.getTime());
+	}
+	
 	private Document convertDocument(ResultSet rs) throws SQLException{
 		return new Document(rs.getInt("document_no"), rs.getInt("employee_no"), rs.getInt("doctype_no")
-				, rs.getString("title"), rs.getString("content"), rs.getInt("officer_no"), rs.getBoolean("officer_check"));
+				, rs.getString("title"), rs.getString("content"), rs.getInt("officer_no"), rs.getBoolean("officer_check"), rs.getDate("regdate"));
 	}
 }

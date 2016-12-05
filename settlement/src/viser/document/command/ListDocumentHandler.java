@@ -4,11 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mvc.command.CommandHandler;
-import viser.document.service.CautionPage;
-import viser.document.service.CheckPage;
-import viser.document.service.CheckWaitPage;
 import viser.document.service.DocumentPage;
 import viser.document.service.ListDocumentService;
+import viser.document.service.PageForm;
 
 public class ListDocumentHandler implements CommandHandler {
 
@@ -35,9 +33,9 @@ public class ListDocumentHandler implements CommandHandler {
 			checkPageNo = Integer.parseInt(checkPageNoVal);
 		}
 		
-		CautionPage cautionPage = (CautionPage) listDocumentService.getDocumentPage(cautionPageNo);
-		CheckWaitPage checkWaitPage = (CheckWaitPage) listDocumentService.getDocumentPage(checkWaitPageNo);
-		CheckPage checkPage = (CheckPage) listDocumentService.getDocumentPage(checkPageNo);
+		PageForm cautionPage = listDocumentService.getDocumentPage(cautionPageNo);
+		PageForm checkWaitPage = listDocumentService.getDocumentPage(checkWaitPageNo);
+		PageForm checkPage = listDocumentService.getDocumentPage(checkPageNo);
 		DocumentPage documentPage = new DocumentPage(cautionPage, checkWaitPage, checkPage);
 		
 		req.setAttribute("documentPage", documentPage);

@@ -7,14 +7,14 @@ import viser.document.model.Document;
 public class PageForm {
 	protected int total;
 	protected int currentPage;
-	protected List<Document> content;
+	protected List<ListDocumentForm> content;
 	protected int totalPages;
 	protected int startPage;
 	protected int endPage;
 	
 	public PageForm(){}
 	
-	public PageForm(int total, int currentPage, int size, List<Document> content){
+	public PageForm(int total, int currentPage, int size, List<ListDocumentForm> content){
 		this.total = total;
 		this.currentPage = currentPage;
 		this.content = content;
@@ -56,11 +56,11 @@ public class PageForm {
 		this.currentPage = currentPage;
 	}
 
-	public List<Document> getContent() {
+	public List<ListDocumentForm> getContent() {
 		return content;
 	}
 
-	public void setContent(List<Document> content) {
+	public void setContent(List<ListDocumentForm> content) {
 		this.content = content;
 	}
 

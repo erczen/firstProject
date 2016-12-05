@@ -1,5 +1,7 @@
 package viser.document.model;
 
+import java.util.Date;
+
 public class Document {
 	private int documentNo;
 	private int employeeNo;
@@ -8,10 +10,11 @@ public class Document {
 	private String content;
 	private int officerNo;
 	private boolean officerCheck;
+	private Date regDate;
 	
 	public Document(){}
 	
-	public Document(int documentNo, int employeeNo, int doctypeNo, String title, String content, int officerNo, boolean officerCheck){
+	public Document(int documentNo, int employeeNo, int doctypeNo, String title, String content, int officerNo, boolean officerCheck, Date regDate){
 		this.documentNo = documentNo;
 		this.employeeNo = employeeNo;
 		this.doctypeNo = doctypeNo;
@@ -19,6 +22,7 @@ public class Document {
 		this.content = content;
 		this.officerNo = officerNo;
 		this.officerCheck = officerCheck;
+		this.regDate = regDate;
 	}
 	
 	public int getDocumentNo() {
@@ -63,4 +67,10 @@ public class Document {
 	public void setOfficerCheck(boolean officerCheck) {
 		this.officerCheck = officerCheck;
 	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}	
 }

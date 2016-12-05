@@ -1,39 +1,39 @@
 package viser.document.service;
 
 public class DocumentPage {
-	private CautionPage cautionPage;
-	private CheckWaitPage checkWaitPage;
-	private CheckPage checkPage;
+	private PageForm cautionPage;
+	private PageForm checkWaitPage;
+	private PageForm checkPage;
 	
 	public DocumentPage() {}
 	
-	public DocumentPage(CautionPage cautionPage, CheckWaitPage checkWaitPage, CheckPage checkPage){
+	public DocumentPage(PageForm cautionPage, PageForm checkWaitPage, PageForm checkPage){
 		this.cautionPage = cautionPage;
 		this.checkWaitPage = checkWaitPage;
 		this.checkPage = checkPage;
 	}
 
-	public CautionPage getCautionPage() {
+	public PageForm getCautionPage() {
 		return cautionPage;
 	}
 
-	public void setCautionPage(CautionPage cautionPage) {
+	public void setCautionPage(PageForm cautionPage) {
 		this.cautionPage = cautionPage;
 	}
 
-	public CheckWaitPage getCheckWaitPage() {
+	public PageForm getCheckWaitPage() {
 		return checkWaitPage;
 	}
 
-	public void setCheckWaitPage(CheckWaitPage checkWaitPage) {
+	public void setCheckWaitPage(PageForm checkWaitPage) {
 		this.checkWaitPage = checkWaitPage;
 	}
 
-	public CheckPage getCheckPage() {
+	public PageForm getCheckPage() {
 		return checkPage;
 	}
 
-	public void setCheckPage(CheckPage checkPage) {
+	public void setCheckPage(PageForm checkPage) {
 		this.checkPage = checkPage;
 	}
 }
