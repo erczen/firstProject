@@ -95,6 +95,6 @@ public class AccountDao {
 	}
 	
 	private Account convertAccount(ResultSet rs) throws SQLException{
-		return new Account(rs.getString("employeeId"), rs.getInt("employeeNo"), rs.getString("password"), rs.getDate("regdate"));
+		return new Account(rs.getString("employee_id"), rs.getInt("employee_no"), rs.getString("password"), rs.getDate("regdate"));
 	}
 }
