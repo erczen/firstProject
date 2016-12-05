@@ -35,8 +35,8 @@
 					여기서 페이지번호를 받아서 테이블에서 가지고 오는데... 문제는 document 모델 클래스에는 이름이 존재하지 않는다.
 					또한 부서 직책 이름을 띄워야 할것인데..  -->
 		<td>${article.writer.name}</td>
-		<td>${article.readCount}</td>
-	</tr>
+		<td>${article.readCount}</td> 
+	</tr>  
 </c:forEach>
 <c:if test="${articlePage.hasArticles()}">
 	<tr>
