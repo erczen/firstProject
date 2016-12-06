@@ -3,14 +3,16 @@ package viser.account.service;
 public class User {
 
 	private String id;
+	private int employeeNo;
 	private String name;
 	private String departmentName;
 	private String positionName;
 	
 	public User(){}
 	
-	public User(String id, String name, String departmentName, String positionName) {
+	public User(String id, int employeeNo, String name, String departmentName, String positionName) {
 		this.id = id;
+		this.employeeNo = employeeNo;
 		this.name = name;
 		this.departmentName = departmentName;
 		this.positionName = positionName;
@@ -22,6 +24,14 @@ public class User {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public int getEmployeeNo() {
+		return employeeNo;
+	}
+
+	public void setEmployeeNo(int employeeNo) {
+		this.employeeNo = employeeNo;
 	}
 
 	public String getName() {

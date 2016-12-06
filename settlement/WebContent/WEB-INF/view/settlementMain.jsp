@@ -7,7 +7,7 @@
 <title>바이저 결제 페이지</title>
 </head>
 <body>
-<p>부서 : ${authUser.departmentName} 직책 : ${authUser.positionName} 이름 : ${authUser.name}</p>
+<p>부서 : ${authUser.departmentName} 직책 : ${authUser.positionName} 이름 : ${authUser.name} <a href="logout.do">[로그아웃하기]</a></p>
 <hr/>
 <table border="1">
 	<tr>
@@ -27,7 +27,7 @@
 	<tr>
 		<td>${caution.regDate}</td>
 		<td>
-		<a href="read.do?no=${caution.documentNo}&pageNo=${documentPage.cautionPage.currentPage}">
+		<a href="readDocument.do?documentNo=${caution.documentNo}&cautionPageNo=${documentPage.cautionPage.currentPage}">
 		<c:out value="${caution.title}"/>
 		</a>
 		</td>
@@ -38,15 +38,15 @@
 	<tr>
 		<td colspan="4">
 			<c:if test="${documentPage.cautionPage.startPage > 5}">
-			<a href="settlementMain.do?pageNo=${documentPage.cautionPage.startPage - 5}">[이전]</a>
+			<a href="settlementMain.do?cautionPageNo=${documentPage.cautionPage.startPage - 5}">[이전]</a>
 			</c:if>
 			<c:forEach var="pNo" 
 					   begin="${documentPage.cautionPage.startPage}" 
 					   end="${documentPage.cautionPage.endPage}">
-			<a href="settlementMain.do?pageNo=${pNo}">[${pNo}]</a>
+			<a href="settlementMain.do?cautionPageNo=${pNo}">[${pNo}]</a>
 			</c:forEach>
 			<c:if test="${documentPage.cautionPage.endPage < documentPage.cautionPage.totalPages}">
-			<a href="settlementMain.do?pageNo=${documentPage.cautionPage.startPage + 5}">[다음]</a>
+			<a href="settlementMain.do?cautionPageNo=${documentPage.cautionPage.startPage + 5}">[다음]</a>
 			</c:if>
 		</td>
 	</tr>
@@ -82,7 +82,7 @@
 		<td>${checkWait.positionName}</td>
 		<td>${checkWait.name}</td>
 		<td>
-		<a href="read.do?no=${checkWait.documentNo}&pageNo=${documentPage.checkWaitPage.currentPage}">
+		<a href="readDocument.do?documentNo=${checkWait.documentNo}&checkWaitPageNo=${documentPage.checkWaitPage.currentPage}">
 		<c:out value="${checkWait.title}"/>
 		</a>
 		</td>
@@ -90,19 +90,19 @@
 		<td>${checkWait.officerCheck}</td>
 	</tr>  
 </c:forEach>
-<c:if test="${documentPage.cautionPage.hasDocuments()}">
+<c:if test="${documentPage.checkWaitPage.hasDocuments()}">
 	<tr>
 		<td colspan="8">
 			<c:if test="${documentPage.checkWaitPage.startPage > 5}">
-			<a href="settlementMain.do?pageNo=${documentPage.checkWaitPage.startPage - 5}">[이전]</a>
+			<a href="settlementMain.do?checkWaitPageNo=${documentPage.checkWaitPage.startPage - 5}">[이전]</a>
 			</c:if>
 			<c:forEach var="pNo" 
 					   begin="${documentPage.checkWaitPage.startPage}" 
 					   end="${documentPage.checkWaitPage.endPage}">
-			<a href="settlementMain.do?pageNo=${pNo}">[${pNo}]</a>
+			<a href="settlementMain.do?checkWaitPageNo=${pNo}">[${pNo}]</a>
 			</c:forEach>
 			<c:if test="${documentPage.checkWaitPage.endPage < documentPage.checkWaitPage.totalPages}">
-			<a href="settlementMain.do?pageNo=${documentPage.checkWaitPage.startPage + 5}">[다음]</a>
+			<a href="settlementMain.do?checkWaitPageNo=${documentPage.checkWaitPage.startPage + 5}">[다음]</a>
 			</c:if>
 		</td>
 	</tr>
@@ -138,7 +138,7 @@
 		<td>${check.positionName}</td>
 		<td>${check.name}</td>
 		<td>
-		<a href="read.do?no=${check.documentNo}&pageNo=${documentPage.checkPage.currentPage}">
+		<a href="readDocument.do?documentNo=${check.documentNo}&checkPageNo=${documentPage.checkPage.currentPage}">
 		<c:out value="${check.title}"/>
 		</a>
 		</td>
@@ -146,19 +146,19 @@
 		<td>${check.officerCheck}</td>
 	</tr>  
 </c:forEach>
-<c:if test="${documentPage.cautionPage.hasDocuments()}">
+<c:if test="${documentPage.checkPage.hasDocuments()}">
 	<tr>
 		<td colspan="8">
 			<c:if test="${documentPage.checkPage.startPage > 5}">
-			<a href="settlementMain.do?pageNo=${documentPage.checkPage.startPage - 5}">[이전]</a>
+			<a href="settlementMain.do?checkPageNo=${documentPage.checkPage.startPage - 5}">[이전]</a>
 			</c:if>
 			<c:forEach var="pNo" 
 					   begin="${documentPage.checkPage.startPage}" 
 					   end="${documentPage.checkPage.endPage}">
-			<a href="settlementMain.do?pageNo=${pNo}">[${pNo}]</a>
+			<a href="settlementMain.do?checkPageNo=${pNo}">[${pNo}]</a>
 			</c:forEach>
 			<c:if test="${documentPage.checkPage.endPage < documentPage.checkPage.totalPages}">
-			<a href="settlementMain.do?pageNo=${documentPage.checkPage.startPage + 5}">[다음]</a>
+			<a href="settlementMain.do?checkPageNoo=${documentPage.checkPage.startPage + 5}">[다음]</a>
 			</c:if>
 		</td>
 	</tr>
@@ -167,6 +167,61 @@
 
 <hr>
 
+<table border="1">
+	<tr>
+		<td colspan="8">[제출목록]</td>
+	</tr>
+	<tr>
+		<td>작성일자</td>
+		<td>문서종류</td>
+		<td>부서</td>
+		<td>직책</td>
+		<td>작성자</td>
+		<td>제목</td>
+		<td>책임자</td>
+		<td>승인여부</td>
+	</tr>
+<c:if test="${documentPage.submitPage.hasNoDocuments()}">
+	<tr>
+		<td colspan="8">게시글이 없습니다.</td>
+	</tr>
+</c:if>
+<c:forEach var="submit" items="${documentPage.submitPage.content}">
+	<tr>
+		<td>${submit.regDate}</td>
+		<td>${submit.doctypeName}</td>
+		<td>${submit.departmentName}</td>
+		<td>${submit.positionName}</td>
+		<td>${submit.name}</td>
+		<td>
+		<a href="readDocument.do?documentNo=${submit.documentNo}&sumbitPageNo=${documentPage.submitPage.currentPage}">
+		<c:out value="${submit.title}"/>
+		</a>
+		</td>
+		<td>${submit.officerDepartment} ${submit.officerPosition} ${submit.officerName}</td>
+		<td>${submit.officerCheck}</td>
+	</tr>  
+</c:forEach>
+<c:if test="${documentPage.submitPage.hasDocuments()}">
+	<tr>
+		<td colspan="8">
+			<c:if test="${documentPage.submitPage.startPage > 5}">
+			<a href="settlementMain.do?sumbitPageNo=${documentPage.submitPage.startPage - 5}">[이전]</a>
+			</c:if>
+			<c:forEach var="pNo" 
+					   begin="${documentPage.submitPage.startPage}" 
+					   end="${documentPage.submitPage.endPage}">
+			<a href="settlementMain.do?sumbitPageNo=${pNo}">[${pNo}]</a>
+			</c:forEach>
+			<c:if test="${documentPage.submitPage.endPage < documentPage.submitPage.totalPages}">
+			<a href="settlementMain.do?sumbitPageNo=${documentPage.submitPage.startPage + 5}">[다음]</a>
+			</c:if>
+		</td>
+	</tr>
+</c:if>
+</table>
+
+<hr>
 <a href="writeDocument.do">[문서작성]</a>
 </body>
 </html>

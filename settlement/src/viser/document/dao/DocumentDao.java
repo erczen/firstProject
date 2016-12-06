@@ -74,6 +74,27 @@ public class DocumentDao {
 		}
 	}
 	
+	public List<Document> selectSubmitDocument(Connection conn, int startRow, int size, int employeeNo) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from document " +
+					"where employee_no = ? order by document_no desc limit ?, ?");
+			pstmt.setInt(1, employeeNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, size);
+			rs = pstmt.executeQuery();
+			List<Document> documentList = new ArrayList<>();
+			while (rs.next()) {
+				documentList.add(convertDocument(rs));
+			}
+			return documentList;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
 	public List<Document> select(Connection conn, int startRow, int size, boolean officerCheck, int officerNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -134,6 +155,41 @@ public class DocumentDao {
 		}
 	}
 	
+	public int selectCount(Connection conn, boolean officerCheck, int officerNo) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(*) from document where officer_check = ? and officer_no = ?");
+			pstmt.setBoolean(1, officerCheck);
+			pstmt.setInt(2, officerNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public int selectEmployeeDocumentCount(Connection conn, int employeeNo) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(*) from document where employee_no = ?");
+			pstmt.setInt(1, employeeNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
 	public int selectCount(Connection conn) throws SQLException {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -147,6 +203,23 @@ public class DocumentDao {
 		} finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(stmt);
+		}
+	}
+	
+	public int selectCount(Connection conn, int doctypeNo) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(*) from document where doctype_no = ?");
+			pstmt.setInt(1, doctypeNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 	}
 	

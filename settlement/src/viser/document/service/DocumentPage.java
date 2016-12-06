@@ -4,13 +4,15 @@ public class DocumentPage {
 	private PageForm cautionPage;
 	private PageForm checkWaitPage;
 	private PageForm checkPage;
+	private PageForm submitPage;
 	
 	public DocumentPage() {}
 	
-	public DocumentPage(PageForm cautionPage, PageForm checkWaitPage, PageForm checkPage){
+	public DocumentPage(PageForm cautionPage, PageForm checkWaitPage, PageForm checkPage, PageForm submitPage){
 		this.cautionPage = cautionPage;
 		this.checkWaitPage = checkWaitPage;
 		this.checkPage = checkPage;
+		this.submitPage = submitPage;
 	}
 
 	public PageForm getCautionPage() {
@@ -36,4 +38,13 @@ public class DocumentPage {
 	public void setCheckPage(PageForm checkPage) {
 		this.checkPage = checkPage;
 	}
+
+	public PageForm getSubmitPage() {
+		return submitPage;
+	}
+
+	public void setSubmitPage(PageForm submitPage) {
+		this.submitPage = submitPage;
+	}
+	
 }

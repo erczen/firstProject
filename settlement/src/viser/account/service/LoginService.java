@@ -31,6 +31,7 @@ public class LoginService {
 			Employee employee = employeeDao.selectByNo(conn, account.getEmployeeNo());
 			User user = new User();
 			user.setId(account.getEmployeeId());
+			user.setEmployeeNo(employee.getEmployeeNo());
 			user.setName(employee.getName());
 			user.setDepartmentName(departmentDao.selectByNo(conn, employee.getDepartmentNo()).getDepartmentName());
 			user.setPositionName(positionDao.selectByNo(conn, employee.getPositionNo()).getPositionName());
