@@ -38,6 +38,15 @@ public class ReadDocumentService {
 		}
 	}
 	
+	public int getOfficerNo(int documentNo){
+		try(Connection conn = ConnectionProvider.getConnection()){
+			Document document = documentDao.selectByNo(conn, documentNo);
+			return document.getOfficerNo();
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+	}
+	
 	private ListDocumentForm convertListDocumentForm(Connection conn, Document document) throws SQLException{
 		Employee employee = employeeDao.selectByNo(conn, document.getEmployeeNo());
 		Employee officer = employeeDao.selectByNo(conn, document.getOfficerNo());

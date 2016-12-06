@@ -74,6 +74,7 @@ public class DoctypeDao {
 			pstmt = conn.prepareStatement("insert into doctype(doctype_name) values(?)");
 			pstmt.setString(1, doctype.getDoctypeName());
 			pstmt.executeUpdate();
+			
 		}finally{
 			JdbcUtil.close(pstmt);
 		}

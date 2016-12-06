@@ -9,15 +9,21 @@ import javax.servlet.http.HttpServletResponse;
 import mvc.command.CommandHandler;
 import viser.account.service.AccountNotFoundException;
 import viser.account.service.User;
-import viser.document.service.WriteDocumentService;
+import viser.document.service.DocumentContentNotFoundException;
+import viser.document.service.DocumentNotFoundException;
+import viser.document.service.ListDocumentForm;
+import viser.document.service.ReadDocumentService;
+import viser.document.service.UpdateDocumentService;
 import viser.document.service.WriteRequest;
 
-public class WriteDocumentHandler implements CommandHandler{
-	private static final String WRITE_VIEW = "/WEB-INF/view/writeDocumentForm.jsp";
-	private static final String SUCCESS_VIEW = "/WEB-INF/view/writeDocumentSuccess.jsp";
-
+public class UpdateDocumentHandler implements CommandHandler {
 	
-	private WriteDocumentService writeDocumentService = new WriteDocumentService();
+	private static final String LIST_VIEW = "/WEB-INF/view/settlementMain.jsp";
+	private static final String SUCCESS_VIEW = "/WEB-INF/view/updateDocumentSuccess.jsp";
+	private static final String WRITE_VIEW = "/WEB-INF/view/writeDocumentForm.jsp";
+	
+	private ReadDocumentService readDocumentService = new ReadDocumentService();
+	private UpdateDocumentService UpdateDocumentService = new UpdateDocumentService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -31,8 +37,20 @@ public class WriteDocumentHandler implements CommandHandler{
 		}
 	}
 	
-	private String processForm(HttpServletRequest req, HttpServletResponse res) {
-		return WRITE_VIEW;
+	private String processForm(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		String documentNoVal = req.getParameter("documentNo");
+		int documentNo = Integer.parseInt(documentNoVal);
+		try {
+			ListDocumentForm documentForm = readDocumentService.getDocument(documentNo);
+			int writerNo = readDocumentService.getWriterNo(documentNo);
+			req.setAttribute("documentForm", documentForm);
+			req.setAttribute("writerNo", writerNo);
+			return WRITE_VIEW;
+		} catch (DocumentNotFoundException | DocumentContentNotFoundException e) {
+			req.getServletContext().log("no document", e);
+			res.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return LIST_VIEW;
+		}
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
@@ -48,7 +66,7 @@ public class WriteDocumentHandler implements CommandHandler{
 		}
 		
 		try{
-			int documentNo = writeDocumentService.write(writeReq);
+			int documentNo = UpdateDocumentService.update(writeReq);
 			req.setAttribute("documentNo", documentNo);
 			
 			return SUCCESS_VIEW;
@@ -64,4 +82,5 @@ public class WriteDocumentHandler implements CommandHandler{
 				, req.getParameter("officerPosition"), req.getParameter("officerName"), req.getParameter("title")
 				, req.getParameter("content"));
 	}
+
 }

@@ -225,6 +225,7 @@ public class DocumentDao {
 	
 	public int insert(Connection conn, Document document) throws SQLException{
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try{
 			pstmt = conn.prepareStatement("insert into document(employee_no, doctype_no, title, content, officer_no, officer_check, regdate) values(?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, document.getEmployeeNo());
@@ -234,9 +235,51 @@ public class DocumentDao {
 			pstmt.setInt(5, document.getOfficerNo());
 			pstmt.setBoolean(6, document.isOfficerCheck());
 			pstmt.setTimestamp(7, new Timestamp(document.getRegDate().getTime()));
-			return pstmt.executeUpdate();
+			int insertedCount = pstmt.executeUpdate();
+			
+			if (insertedCount > 0) {
+				rs = pstmt.executeQuery("select last_insert_id() from document");
+				if (rs.next()) {
+					Integer newNo = rs.getInt(1);
+					return newNo;
+				}
+			}
+			
+			return 0;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public int update(Connection conn, Document document) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement("update document set employee_no = ?, doctype_no = ?, "
+					+ "title = ?, content = ?, officer_no = ?, officer_check = ? where document_no = ?");
+			pstmt.setInt(1, document.getEmployeeNo());
+			pstmt.setInt(2, document.getDoctypeNo());
+			pstmt.setString(3, document.getTitle());
+			pstmt.setString(4, document.getContent());
+			pstmt.setInt(5, document.getOfficerNo());
+			pstmt.setBoolean(6, document.isOfficerCheck());
+			pstmt.setInt(7, document.getDocumentNo());
+			
+			int insertedCount = pstmt.executeUpdate();
+			
+			if (insertedCount > 0) {
+				rs = pstmt.executeQuery("select last_insert_id() from document");
+				if (rs.next()) {
+					Integer newNo = rs.getInt(1);
+					return newNo;
+				}
+			}
+			
+			return 0;
 		}finally{
 			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
 		}
 	}
 	

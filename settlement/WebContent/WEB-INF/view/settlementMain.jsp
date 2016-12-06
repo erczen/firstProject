@@ -27,7 +27,7 @@
 	<tr>
 		<td>${caution.regDate}</td>
 		<td>
-		<a href="readDocument.do?documentNo=${caution.documentNo}&cautionPageNo=${documentPage.cautionPage.currentPage}">
+		<a href="readDocument.do?documentNo=${caution.documentNo}&pageNo=${documentPage.cautionPage.currentPage}">
 		<c:out value="${caution.title}"/>
 		</a>
 		</td>
@@ -82,7 +82,7 @@
 		<td>${checkWait.positionName}</td>
 		<td>${checkWait.name}</td>
 		<td>
-		<a href="readDocument.do?documentNo=${checkWait.documentNo}&checkWaitPageNo=${documentPage.checkWaitPage.currentPage}">
+		<a href="readDocument.do?documentNo=${checkWait.documentNo}&pageNo=${documentPage.checkWaitPage.currentPage}">
 		<c:out value="${checkWait.title}"/>
 		</a>
 		</td>
@@ -138,7 +138,7 @@
 		<td>${check.positionName}</td>
 		<td>${check.name}</td>
 		<td>
-		<a href="readDocument.do?documentNo=${check.documentNo}&checkPageNo=${documentPage.checkPage.currentPage}">
+		<a href="readDocument.do?documentNo=${check.documentNo}&pageNo=${documentPage.checkPage.currentPage}">
 		<c:out value="${check.title}"/>
 		</a>
 		</td>
@@ -194,7 +194,7 @@
 		<td>${submit.positionName}</td>
 		<td>${submit.name}</td>
 		<td>
-		<a href="readDocument.do?documentNo=${submit.documentNo}&sumbitPageNo=${documentPage.submitPage.currentPage}">
+		<a href="readDocument.do?documentNo=${submit.documentNo}&pageNo=${documentPage.submitPage.currentPage}">
 		<c:out value="${submit.title}"/>
 		</a>
 		</td>

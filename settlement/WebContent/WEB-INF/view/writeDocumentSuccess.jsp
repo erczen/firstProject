@@ -10,6 +10,6 @@
 <br>
 ${ctxPath = pageContext.request.contextPath ; ''}
 <a href="${ctxPath}/settlementMain.do">[문서목록보기]</a>
-<a href="${ctxPath}/read.do?no=${documentNo}">[문서내용보기]</a>
+<a href="${ctxPath}/readDocument.do?documentNo=${documentNo}">[문서내용보기]</a>
 </body>
 </html>

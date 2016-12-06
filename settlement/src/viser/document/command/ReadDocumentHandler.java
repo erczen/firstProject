@@ -10,7 +10,10 @@ import viser.document.service.ListDocumentForm;
 import viser.document.service.ReadDocumentService;
 
 public class ReadDocumentHandler implements CommandHandler {
-
+	
+	private static final String LIST_VIEW = "/WEB-INF/view/settlementMain.jsp";
+	private static final String READ_VIEW = "/WEB-INF/view/readDocument.jsp";
+	
 	private ReadDocumentService readDocumentService = new ReadDocumentService();
 
 	@Override
@@ -21,13 +24,15 @@ public class ReadDocumentHandler implements CommandHandler {
 		try {
 			ListDocumentForm documentForm = readDocumentService.getDocument(documentNo);
 			int writerNo = readDocumentService.getWriterNo(documentNo);
+			int officerNo = readDocumentService.getOfficerNo(documentNo);
 			req.setAttribute("documentForm", documentForm);
 			req.setAttribute("writerNo", writerNo);
-			return "/WEB-INF/view/readDocument.jsp";
+			req.setAttribute("officerNo", officerNo);
+			return READ_VIEW;
 		} catch (DocumentNotFoundException | DocumentContentNotFoundException e) {
 			req.getServletContext().log("no document", e);
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			return LIST_VIEW;
 		}
 	}
 }

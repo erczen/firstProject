@@ -43,10 +43,15 @@
 <tr>
 	<td colspan="2">
 		<c:set var="pageNo" value="${empty param.pageNo ? '1' : param.pageNo}" />
-		<a href="list.do?pageNo=${pageNo}">[목록]</a>
+		<!--  목록으로 되돌아 갈때 각 표별 리스트로 되돌아 가야되는데 이거 수정필요 -->
+		<a href="settlementMain.do?pageNo=${pageNo}">[목록]</a>
 		<c:if test="${authUser.employeeNo == writerNo}">
-		<a href="modify.do?no=${articleData.article.number}">[게시글수정]</a>
-		<a href="delete.do?no=${articleData.article.number}">[게시글삭제]</a>
+		<a href="updateDocument.do?documentNo=${documentForm.documentNo}">[게시글수정]</a>
+		<a href="deleteDocument.do?documentNo=${documentForm.documentNo}">[게시글삭제]</a>
+		</c:if>
+		<c:if test="${authUser.employeeNo == officerNo}">
+		<a href="checkDocument.do?documentNo=${documentForm.documentNo}">[승인]</a>
+		<a href="rejectDocument.do?documentNo=${documentForm.documentNo}">[거절]</a>
 		</c:if>
 	</td>
 </tr>
